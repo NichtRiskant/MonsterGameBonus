@@ -1,0 +1,41 @@
+Monster-Kampfspiel: Inhaltsverzeichnis
+
+1. Rekursion
+   - Klasse: Monster, Methode: paintRecursive, Zeilen: 14-20
+
+2. Klassen-Hierarchie mit >2 Ebenen
+   - Klasse: Monster, Zeilen: 1-41
+   - Klasse: SimpleMonster, Zeilen: 1-28
+   - Klasse: AdvancedMonster, Zeilen: 1-29
+
+3. Polymorphie
+   - Klasse: Monster, Zeilen: 1-41
+   - Klasse: SimpleMonster, Zeilen: 1-28
+   - Klasse: AdvancedMonster, Zeilen: 1-29
+   - Klasse: Student, Zeilen: 1-29
+
+4. Interface
+   - Klasse: Fightable, Zeilen: 1-3
+
+5. Exception mit eigener Exceptionklasse und deren Anwendung
+   - Klasse: HealthException, Zeilen: 1-6
+   - Anwendung in Klasse: Monster, Methode: reduceHealth, Zeilen: 26-32
+   - Anwendung in Klasse: Game, Methode: main, Zeilen: 55-60
+
+6. Test
+   - Klasse: GameTest, Zeilen: 1-31
+
+7. Geschachtelte Klasse
+   - Statisch geschachtelte Klasse: Klasse: Game, Zeilen: 83-87
+   - Lokale Klasse: Klasse: Game, Zeilen: 67-72
+   - Anonyme Klasse: Klasse: Game, Zeilen: 78-83
+   - Elementklasse: Klasse: Monster, Zeilen: 1-41
+
+8. Container
+   - Klasse: Game, Zeilen: 11-13
+
+9. Lambda
+   - Klasse: Game, Zeilen: 33-39
+
+10. Dokumentation
+   - Datei: Inhaltsverzeichnis.txt
