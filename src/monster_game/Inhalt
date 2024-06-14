@@ -26,16 +26,16 @@ Monster-Kampfspiel: Inhaltsverzeichnis
    - Klasse: GameTest, Zeilen: 1-31
 
 7. Geschachtelte Klasse
-   - Statisch geschachtelte Klasse: Klasse: Game, Zeilen: 83-87
-   - Lokale Klasse: Klasse: Game, Zeilen: 67-72
-   - Anonyme Klasse: Klasse: Game, Zeilen: 78-83
+   - Statisch geschachtelte Klasse: Klasse: Game, Methode: StaticNestedClass.displayScore, Zeilen: 112-117
+   - Lokale Klasse: Klasse: Game, Methode: SpecialDefense, Zeilen: 91-97
+   - Anonyme Klasse: Klasse: Game, Methode: specialAttack, Zeilen: 75-81
    - Elementklasse: Klasse: Monster, Zeilen: 1-41
 
 8. Container
    - Klasse: Game, Zeilen: 11-13
 
 9. Lambda
-   - Klasse: Game, Zeilen: 33-39
+   - Klasse: Game, Methode: attackMonster, Zeilen: 34-40
 
 10. Dokumentation
    - Datei: Inhaltsverzeichnis.txt

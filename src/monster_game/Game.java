@@ -12,18 +12,21 @@ public class Game {
     public static void main(String[] args) {
         initWindow();
 
+        // Liste zur Verwaltung der Monster (Container)
         List<Monster> monsters = new ArrayList<>();
         monsters.add(new SimpleMonster("Wiederholungsklausur", 15, 300, 100));
         monsters.add(new AdvancedMonster("Prüfungsmonster", 20, 500, 100));
 
         Student student = new Student("Student", 15, 100, 100);
 
+        // Zeichnen der Spielfiguren
         student.paint();
         monsters.forEach(Monster::paint);
 
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
 
+        // Lambda-Ausdruck für Angriffslogik
         Consumer<Monster> attackMonster = (Monster m) -> {
             try {
                 m.reduceHealth(5);
@@ -37,6 +40,8 @@ public class Game {
         System.out.println("Du spielst als Student und kämpfst gegen zwei Monster: Wiederholungsklausur und Prüfungsmonster.");
         System.out.println("Um einen Angriff zu starten, gib eine Zahl zwischen 1 und 5 ein. Triffst du die richtige Zahl, greifst du das Monster an.");
 
+        int consecutiveHits = 0; // Zähler für aufeinanderfolgende Treffer
+
         while (!student.isDefeated() && monsters.stream().anyMatch(m -> !m.isDefeated())) {
             System.out.println("\nUm einen Angriff zu starten, gib deine Angriffszahl ein (1-5): ");
             int input = scanner.nextInt();
@@ -44,7 +49,28 @@ public class Game {
 
             if (input == randomNumber) {
                 System.out.println("Deine Angriffszahl war korrekt, du greifst das Monster an!");
-                attackMonster.accept(monsters.stream().filter(m -> !m.isDefeated()).findFirst().orElse(null));
+                consecutiveHits++;
+
+                if (consecutiveHits == 2) {
+                    // Anonyme Klasse für einen Spezialangriff nach zwei aufeinanderfolgenden Treffern
+                    Fightable specialAttack = new Fightable() {
+                        @Override
+                        public void attack(Fightable opponent) {
+                            System.out.println("Ein einmaliger Spezialangriff des Studenten nach zwei aufeinanderfolgenden Treffern!");
+                            try {
+                                ((Monster) opponent).reduceHealth(7);
+                            } catch (HealthException e) {
+                                System.out.println(e.getMessage());
+                            }
+                        }
+                    };
+
+                    // Spezialangriff ausführen
+                    specialAttack.attack(monsters.stream().filter(m -> !m.isDefeated()).findFirst().orElse(null));
+                    consecutiveHits = 0; // Zähler zurücksetzen nach Spezialangriff
+                } else {
+                    attackMonster.accept(monsters.stream().filter(m -> !m.isDefeated()).findFirst().orElse(null));
+                }
 
                 // Lokale Klasse für Spezialverteidigung
                 class SpecialDefense {
@@ -72,6 +98,7 @@ public class Game {
                 }
                 System.out.println("Student erleidet 1 Trefferpunkt - Restliches Leben: " + student.health);
                 System.out.println("Die richtige Zahl wäre gewesen: " + randomNumber);
+                consecutiveHits = 0; // Zähler zurücksetzen, wenn ein Angriff verfehlt
             }
 
             // Zeichnen der verbleibenden Monster und des Studenten
@@ -88,27 +115,16 @@ public class Game {
 
         scanner.close();
 
-        // Anonyme Klasse für einmalige Aktion
-        Fightable anonymousClass = new Fightable() {
-            @Override
-            public void attack(Fightable opponent) {
-                System.out.println("Ein einmaliger Spezialangriff des Studenten!");
-                try {
-                    ((Monster) opponent).reduceHealth(3);
-                } catch (HealthException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        };
-
-        // Einmalige Nutzung der anonymen Klasse
-        anonymousClass.attack(monsters.get(1));
+        // Statische geschachtelte Klasse zur Anzeige des Punktestands
+        StaticNestedClass.displayScore(student, monsters);
     }
 
-    // Statische geschachtelte Klasse
+    // Statische geschachtelte Klasse für Hilfsfunktionen
     static class StaticNestedClass {
-        public static void display() {
-            System.out.println("Dies ist eine statische geschachtelte Klasse.");
+        public static void displayScore(Student student, List<Monster> monsters) {
+            System.out.println("Aktueller Punktestand:");
+            System.out.println("Student: " + student.health);
+            monsters.forEach(monster -> System.out.println(monster.name + ": " + monster.health));
         }
     }
 }
