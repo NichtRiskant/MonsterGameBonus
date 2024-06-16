@@ -159,7 +159,7 @@ public class Game {
             System.out.println("--------------------------------------------------");
             System.out.println("Du hast die Monster besiegt und deine Prüfung bestanden!");
             System.out.println("--------------------------------------------------");
-            System.out.println("--------------------------------------------------");
+            System.out.println("-------------------------------------------------- ");
         }
 
         scanner.close();

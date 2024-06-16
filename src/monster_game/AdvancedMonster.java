@@ -9,23 +9,23 @@ public class AdvancedMonster extends Monster {
 
     @Override
     public void paint() {
-        // Beine (zwei schmale blaue Rechtecke)
+        // Beine
         addRect(xPos , yPos +40, 20, 100, black);   // linkes Bein
         addRect(xPos + 60, yPos +40, 20, 100, black);  // rechtes Bein
 
-        // Körper (breites blaues Rechteck)
+        // Körper
         addRect(xPos, yPos -20, 80, 96, yellow);
 
-        // Arme (schmale blaue Rechtecke)
+        // Arme
         addRect(xPos + 80, yPos + 20, 80, 24, red);  // linker Arm
         addRect(xPos - 80, yPos + 20, 80, 24, red);  // rechter Arm
 
-        // Kopf (blauer Kreis)
+        // Kopf
         addCircle(xPos + 13, yPos - 60, 40, red);
-
+        //Schwert
         addRect(xPos -90, yPos -60, 10, 110, black);  // Schwertklinge
         addRect(xPos -100, yPos +10, 30, 10, black);   // Schwertgriff
-
+//Schwert2
         addRect(xPos +160, yPos -60, 10, 110, black);  // Schwertklinge rechts
         addRect(xPos +150, yPos +10, 30, 10, black);   // Schwertgriff rechts
     }

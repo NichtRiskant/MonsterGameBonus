@@ -10,7 +10,7 @@ public class GameTest {
         try {
             monster.reduceHealth(5);
         } catch (HealthException e) {
-            fail("HealthException sollte nicht ausgelöst werden.");
+            fail("HealthException sollte nicht ausgelöst werden. ");
         }
         assertEquals(10, monster.health);
     }

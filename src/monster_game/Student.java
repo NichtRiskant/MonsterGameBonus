@@ -10,7 +10,7 @@ public class Student extends Monster {
     @Override
     public void paint() {
         // Beine (zwei schmale blaue Rechtecke)
-        addRect(xPos + 5, yPos + 40, 10, 40, black);   // linkes Bein
+        addRect(xPos + 5, yPos + 40, 10, 40, black);    // linkes Bein
         addRect(xPos + 25, yPos + 40, 10, 40, black);  // rechtes Bein
 
         // Körper (breites blaues Rechteck)

@@ -10,7 +10,7 @@ public class SimpleMonster extends Monster {
     @Override
     public void paint() {
         // Beine (zwei schmale blaue Rechtecke)
-        addRect(xPos , yPos +40, 20, 100, black);   // linkes Bein
+        addRect(xPos , yPos +40, 20, 100, black);    // linkes Bein
         addRect(xPos + 60, yPos +40, 20, 100, black);  // rechtes Bein
 
         // Körper (breites blaues Rechteck)
