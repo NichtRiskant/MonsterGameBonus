@@ -135,4 +135,6 @@ public class Drawing {
         addRect(student.xPos + 70, student.yPos + -28, 5, 55, white);  // Schwertklinge
         addRect(student.xPos + 65, student.yPos + 5, 15, 5, white);    // Schwertgriff
     }
+
+
 }

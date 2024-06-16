@@ -6,8 +6,8 @@ import java.util.Scanner;
 import static jsTools.Graph.*;
 import static monster_game.Drawing.*;
 
-public class Gameplay {
-    public static void runGameplay(Student student, Monster simpleMonster, Monster advancedMonster, int groundYPosition, int grassHeight, int windowWidth, int earthHeight, int choice) {
+public class GamePlay {
+    public static void runGamePlay(Student student, Monster simpleMonster, Monster advancedMonster, int groundYPosition, int grassHeight, int windowWidth, int earthHeight, int choice) {
         Random random = new Random();
         Scanner scanner = new Scanner(System.in);
 
@@ -50,11 +50,11 @@ public class Gameplay {
                     consecutiveHits = 0; // Zähler zurücksetzen nach Spezialangriff
                 } else {
                     try {
-                        targetMonster.reduceHealth(5);
+                        targetMonster.reduceHealth(student.getAttackDamage());
                     } catch (HealthException e) {
                         System.out.println(e.getMessage());
                     }
-                    System.out.println(targetMonster.name + " erleidet 5 Trefferpunkte - Restliches Leben: " + targetMonster.health);
+                    System.out.println(targetMonster.name + " erleidet " + student.getAttackDamage() + " Trefferpunkte - Restliches Leben: " + targetMonster.health);
                 }
             } else {
                 System.out.println("Deine Angriffszahl war falsch, Monster wehrt den Angriff ab und greift dich an!");
@@ -67,11 +67,11 @@ public class Gameplay {
                         void defend() {
                             System.out.println("Spezialverteidigung des Monsters!");
                             try {
-                                student.reduceHealth(3);
+                                student.reduceHealth(7);
                             } catch (HealthException e) {
                                 System.out.println(e.getMessage());
                             }
-                            System.out.println("Student erleidet 3 Trefferpunkte - Restliches Leben: " + student.health);
+                            System.out.println("Student erleidet 7 Trefferpunkte - Restliches Leben: " + student.health);
                         }
                     }
 
@@ -80,12 +80,8 @@ public class Gameplay {
                     defense.defend();
                     consecutiveMisses = 0; // Zähler zurücksetzen nach Spezialverteidigung
                 } else {
-                    try {
-                        student.reduceHealth(1);
-                    } catch (HealthException e) {
-                        System.out.println(e.getMessage());
-                    }
-                    System.out.println("Student erleidet 1 Trefferpunkt - Restliches Leben: " + student.health);
+                    targetMonster.attack(student); // Hier wird die attack Methode des Monsters aufgerufen
+                    System.out.println("Student erleidet " + targetMonster.getAttackDamage() + " Trefferpunkte - Restliches Leben: " + student.health);
                 }
                 System.out.println("Die richtige Zahl wäre gewesen: " + randomNumber);
                 System.out.println("--------------------------------------------------");
@@ -108,7 +104,7 @@ public class Gameplay {
             if (simpleMonster != null && simpleMonster.isDefeated()) {
                 System.out.println("Das erste Monster wurde besiegt! Kämpfe weiter gegen das nächste Monster!");
                 overpaintMonster(simpleMonster);
-                simpleMonster = null; // Entfernen Sie das besiegte Monster
+                simpleMonster = null;
             } else if (advancedMonster != null && advancedMonster.isDefeated()) {
                 System.out.println("Das erste Monster wurde besiegt! Kämpfe weiter gegen das nächste Monster!");
                 overpaintMonster(advancedMonster);
@@ -119,11 +115,10 @@ public class Gameplay {
         if (student.isDefeated()) {
             System.out.println("--------------------------------------------------");
             System.out.println("--------------------------------------------------");
-            System.out.println("Das Monster war zu stark, du hast die Prüfung nicht bestanden!");
+            System.out.println(" Das Monster war zu stark, du hast die Prüfung nicht bestanden!");
             System.out.println("--------------------------------------------------");
             System.out.println("--------------------------------------------------");
             overpaintStudent(student);
-
         } else {
             System.out.println("--------------------------------------------------");
             System.out.println("--------------------------------------------------");
@@ -133,5 +128,7 @@ public class Gameplay {
         }
 
         scanner.close();
+
+
     }
 }

@@ -37,9 +37,14 @@ public class AdvancedMonster extends Monster {
     public void attack(Fightable opponent) {
         System.out.println(name + " führt einen starken Angriff aus!");
         try {
-            ((Monster) opponent).reduceHealth(3); // Stärkerer Angriff
+            ((Monster) opponent).reduceHealth(5);
         } catch (HealthException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @Override
+    public int getAttackDamage() {
+        return 5;
     }
 }

@@ -36,4 +36,9 @@ public class Student extends Monster {
             System.out.println(e.getMessage());
         }
     }
+
+    @Override
+    public int getAttackDamage() {
+        return 2;
+    }
 }

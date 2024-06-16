@@ -34,4 +34,8 @@ public abstract class Monster implements Fightable {
             throw new HealthException(name + " hat negative Gesundheit!");
         }
     }
+
+    public abstract void attack(Fightable opponent);
+
+    public abstract int getAttackDamage(); // Neue Methode hinzufügen
 }
