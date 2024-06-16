@@ -22,9 +22,10 @@ public class Game {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Wähle den Schwierigkeitsgrad, (1).Einfach, (2).Schwer, (3).(Fast)Unmöglich: ");
+        int choice = scanner.nextInt();
 
-
-         int choice = scanner.nextInt();
+        // Zeichne das Level am oberen Rand des Fensters
+        drawLevel(choice);
 
         Monster simpleMonster = null;
         Monster advancedMonster = null;
@@ -144,6 +145,7 @@ public class Game {
             if (advancedMonster != null && !advancedMonster.isDefeated()) {
                 advancedMonster.paint();
             }
+            drawLevel(choice); // Zeichne das Level erneut
         }
 
         if (student.isDefeated()) {
@@ -164,6 +166,89 @@ public class Game {
 
         // Statische geschachtelte Klasse zur Anzeige des Punktestands
         StaticNestedClass.displayScore(student, simpleMonster, advancedMonster);
+    }
+
+    // Methode zur Anzeige des Levels
+    public static void drawLevel(int level) {
+        String levelText = "Level " + level;
+        int xStart = 10;
+        int yStart = 10;
+        int rectSize = 5;
+        int spacing = 2;
+
+        for (char c : levelText.toCharArray()) {
+            drawCharacter(c, xStart, yStart, rectSize, spacing);
+            xStart += (rectSize + spacing) * 6; // Anpassung der Startposition für das nächste Zeichen
+        }
+    }
+
+    public static void drawCharacter(char c, int xStart, int yStart, int rectSize, int spacing) {
+        // Muster für die Zeichen (einfaches Beispiel für L, e, v, l und Ziffern)
+        int[][] L = {
+                {1, 0, 0, 0, 0},
+                {1, 0, 0, 0, 0},
+                {1, 0, 0, 0, 0},
+                {1, 0, 0, 0, 0},
+                {1, 1, 1, 1, 1},
+        };
+        int[][] E = {
+                {1, 1, 1, 1, 1},
+                {1, 0, 0, 0, 0},
+                {1, 1, 1, 1, 1},
+                {1, 0, 0, 0, 0},
+                {1, 1, 1, 1, 1},
+        };
+        int[][] V = {
+                {1, 0, 0, 0, 1},
+                {1, 0, 0, 0, 1},
+                {1, 0, 0, 0, 1},
+                {0, 1, 0, 1, 0},
+                {0, 0, 1, 0, 0},
+        };
+        int[][] L2 = L; // Wiederverwendung des L-Musters
+
+        int[][] num1 = {
+                {0, 1, 0},
+                {1, 1, 0},
+                {0, 1, 0},
+                {0, 1, 0},
+                {1, 1, 1},
+        };
+        int[][] num2 = {
+                {1, 1, 1},
+                {0, 0, 1},
+                {1, 1, 1},
+                {1, 0, 0},
+                {1, 1, 1},
+        };
+        int[][] num3 = {
+                {1, 1, 1},
+                {0, 0, 1},
+                {1, 1, 1},
+                {0, 0, 1},
+                {1, 1, 1},
+        };
+
+        int[][] pattern;
+
+        switch (c) {
+            case 'L': pattern = L; break;
+            case 'e': pattern = E; break;
+            case 'v': pattern = V; break;
+            case 'l': pattern = L2; break;
+            case '1': pattern = num1; break;
+            case '2': pattern = num2; break;
+            case '3': pattern = num3; break;
+            default: return;
+        }
+
+        for (int i = 0; i < pattern.length; i++) {
+            for (int j = 0; j < pattern[i].length; j++) {
+                if (pattern[i][j] == 1) {
+                    addRect(xStart + j * (rectSize + spacing), yStart + i * (rectSize + spacing), rectSize, rectSize, black);
+                }
+            }
+        }
     }
 
     // Statische geschachtelte Klasse für Hilfsfunktionen
