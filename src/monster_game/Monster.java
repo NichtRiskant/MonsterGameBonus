@@ -19,9 +19,8 @@ public abstract class Monster implements Fightable {
     // Rekursive Methode zum Zeichnen
     public void paintRecursive(int count) {
         if (count > 0) {
-            addRect(xPos + count * 10, yPos, 10, 10, red);
+            addRect(xPos + count * 10, yPos - 80, 10, 10, red); // Position über dem Monster
             paintRecursive(count - 1);
-
         }
     }
 

@@ -29,15 +29,15 @@ public class Game {
 
         Monster simpleMonster = null;
         Monster advancedMonster = null;
-        Student student = new Student("Student", 100, 100, groundYPosition - 60 - grassHeight);
+        Student student = new Student("Student", 15, 100, groundYPosition - 60 - grassHeight);
 
         if (choice == 1) {
-            simpleMonster = new SimpleMonster("Wiederholungsklausur", 5, 500, groundYPosition - 120 - grassHeight);
+            simpleMonster = new SimpleMonster("Wiederholungsklausur", 100, 500, groundYPosition - 120 - grassHeight);
         } else if (choice == 2) {
-            advancedMonster = new AdvancedMonster("Prüfungsmonster", 1, 500, groundYPosition - 120 - grassHeight);
+            advancedMonster = new AdvancedMonster("Prüfungsmonster", 15, 500, groundYPosition - 120 - grassHeight);
         } else if (choice == 3) {
-            simpleMonster = new SimpleMonster("Wiederholungsklausur", 5, 400, groundYPosition - 120 - grassHeight);
-            advancedMonster = new AdvancedMonster("Prüfungsmonster", 5, 700, groundYPosition - 120 - grassHeight);
+            simpleMonster = new SimpleMonster("Wiederholungsklausur", 15, 400, groundYPosition - 120 - grassHeight);
+            advancedMonster = new AdvancedMonster("Prüfungsmonster", 15, 700, groundYPosition - 120 - grassHeight);
         } else {
             System.out.println("Ungültige Wahl! Spiel wird beendet.");
             scanner.close();
@@ -62,10 +62,10 @@ public class Game {
         System.out.println("Du spielst als Student und kämpfst gegen die Monster.");
         System.out.println("Um einen Angriff zu starten, gib eine Zahl zwischen 1 und 5 ein. Triffst du die richtige Zahl, greifst du das Monster an.");
 
-        while (!student.isDefeated() && (simpleMonster == null || !simpleMonster.isDefeated()) && (advancedMonster == null || !advancedMonster.isDefeated())) {
+        while (!student.isDefeated() && ((simpleMonster != null && !simpleMonster.isDefeated()) || (advancedMonster != null && !advancedMonster.isDefeated()))) {
             System.out.println("\nUm einen Angriff zu starten, gib deine Angriffszahl ein (1-3): ");
             int input = scanner.nextInt();
-            int randomNumber = random.nextInt(3) + 1;
+            int randomNumber = random.nextInt(1) + 1;
 
             Monster targetMonster = (simpleMonster != null && !simpleMonster.isDefeated()) ? simpleMonster : advancedMonster;
 
@@ -82,6 +82,7 @@ public class Game {
                             System.out.println("Ein einmaliger Spezialangriff des Studenten nach zwei aufeinanderfolgenden Treffern!");
                             try {
                                 ((Monster) opponent).reduceHealth(7);
+                                System.out.println(targetMonster.name + " erleidet 7 Trefferpunkte - Restliches Leben: " + ((Monster) opponent).health);
                             } catch (HealthException e) {
                                 System.out.println(e.getMessage());
                             }
@@ -146,6 +147,17 @@ public class Game {
                 advancedMonster.paint();
             }
             drawLevel(choice); // Zeichne das Level erneut
+
+            // Überprüfen, ob ein Monster besiegt wurde und übermalen
+            if (simpleMonster != null && simpleMonster.isDefeated()) {
+                System.out.println("Das erste Monster wurde besiegt! Kämpfe weiter gegen das nächste Monster!");
+                overpaintMonster(simpleMonster);
+                simpleMonster = null; // Entfernen Sie das besiegte Monster
+            } else if (advancedMonster != null && advancedMonster.isDefeated()) {
+                System.out.println("Das erste Monster wurde besiegt! Kämpfe weiter gegen das nächste Monster!");
+                overpaintMonster(advancedMonster);
+                advancedMonster = null; // Entfernen Sie das besiegte Monster
+            }
         }
 
         if (student.isDefeated()) {
@@ -159,7 +171,7 @@ public class Game {
             System.out.println("--------------------------------------------------");
             System.out.println("Du hast die Monster besiegt und deine Prüfung bestanden!");
             System.out.println("--------------------------------------------------");
-            System.out.println("-------------------------------------------------- ");
+            System.out.println("--------------------------------------------------");
         }
 
         scanner.close();
@@ -248,6 +260,43 @@ public class Game {
                     addRect(xStart + j * (rectSize + spacing), yStart + i * (rectSize + spacing), rectSize, rectSize, black);
                 }
             }
+        }
+    }
+
+    public static void overpaintMonster(Monster monster) {
+        // Monster übermalen
+        if (monster instanceof SimpleMonster) {
+            new SimpleMonster(monster.name, monster.health, monster.xPos, monster.yPos) {
+                @Override
+                public void paint() {
+                    // Übermalen mit Weiß
+                    addRect(xPos , yPos +40, 20, 100, white);   // linkes Bein
+                    addRect(xPos + 60, yPos +40, 20, 100, white);  // rechtes Bein
+                    addRect(xPos, yPos -20, 80, 96, white);  // Körper
+                    addRect(xPos + 80, yPos + 20, 24, 80, white);  // linker Arm
+                    addRect(xPos - 80, yPos + 20, 80, 24, white);  // rechter Arm
+                    addCircle(xPos + 13, yPos - 60, 40, white);  // Kopf
+                    addRect(xPos -90, yPos -60, 10, 110, white);  // Schwertklinge
+                    addRect(xPos -100, yPos +10, 30, 10, white);  // Schwertgriff
+                }
+            }.paint();
+        } else if (monster instanceof AdvancedMonster) {
+            new AdvancedMonster(monster.name, monster.health, monster.xPos, monster.yPos) {
+                @Override
+                public void paint() {
+                    // Übermalen mit Weiß
+                    addRect(xPos , yPos +40, 20, 100, white);   // linkes Bein
+                    addRect(xPos + 60, yPos +40, 20, 100, white);  // rechtes Bein
+                    addRect(xPos, yPos -20, 80, 96, white);  // Körper
+                    addRect(xPos + 80, yPos + 20, 80, 24, white);  // linker Arm
+                    addRect(xPos - 80, yPos + 20, 80, 24, white);  // rechter Arm
+                    addCircle(xPos + 13, yPos - 60, 40, white);  // Kopf
+                    addRect(xPos -90, yPos -60, 10, 110, white);  // Schwertklinge
+                    addRect(xPos -100, yPos +10, 30, 10, white);  // Schwertgriff
+                    addRect(xPos +160, yPos -60, 10, 110, white);  // Schwertklinge rechts
+                    addRect(xPos +150, yPos +10, 30, 10, white);  // Schwertgriff rechts
+                }
+            }.paint();
         }
     }
 

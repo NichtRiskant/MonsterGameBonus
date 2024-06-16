@@ -9,25 +9,28 @@ public class AdvancedMonster extends Monster {
 
     @Override
     public void paint() {
-        // Beine
-        addRect(xPos , yPos +40, 20, 100, black);   // linkes Bein
-        addRect(xPos + 60, yPos +40, 20, 100, black);  // rechtes Bein
+        // Beine (zwei schmale blaue Rechtecke)
+        addRect(xPos, yPos + 40, 20, 100, black);   // linkes Bein
+        addRect(xPos + 60, yPos + 40, 20, 100, black);  // rechtes Bein
 
-        // Körper
-        addRect(xPos, yPos -20, 80, 96, yellow);
+        // Körper (breites blaues Rechteck)
+        addRect(xPos, yPos - 20, 80, 96, yellow);
 
-        // Arme
+        // Arme (schmale blaue Rechtecke)
         addRect(xPos + 80, yPos + 20, 80, 24, red);  // linker Arm
         addRect(xPos - 80, yPos + 20, 80, 24, red);  // rechter Arm
 
-        // Kopf
+        // Kopf (blauer Kreis)
         addCircle(xPos + 13, yPos - 60, 40, red);
-        //Schwert
-        addRect(xPos -90, yPos -60, 10, 110, black);  // Schwertklinge
-        addRect(xPos -100, yPos +10, 30, 10, black);   // Schwertgriff
-//Schwert2
-        addRect(xPos +160, yPos -60, 10, 110, black);  // Schwertklinge rechts
-        addRect(xPos +150, yPos +10, 30, 10, black);   // Schwertgriff rechts
+
+        addRect(xPos - 90, yPos - 60, 10, 110, black);  // Schwertklinge
+        addRect(xPos - 100, yPos + 10, 30, 10, black);   // Schwertgriff
+
+        addRect(xPos + 160, yPos - 60, 10, 110, black);  // Schwertklinge rechts
+        addRect(xPos + 150, yPos + 10, 30, 10, black);   // Schwertgriff rechts
+
+        // Rekursive Methode zum Zeichnen von Dekorationen
+        paintRecursive(5); // Anzahl der Dekorationen
     }
 
     @Override
