@@ -26,8 +26,8 @@ Monster-Kampfspiel: Inhaltsverzeichnis
    - Klasse: GameTest, Zeilen: 1-31
 
 7. Geschachtelte Klasse
-   - Statisch geschachtelte Klasse: Klasse: Game, Methode: StaticNestedClass.displayScore, Zeilen: 112-117
-   - Lokale Klasse: Klasse: Game, Methode: SpecialDefense, Zeilen: 91-97
+   - Statisch geschachtelte Klasse: Klasse: Game, Methode: StaticNestedClass.displayScore, Zeilen: 111-116
+   - Lokale Klasse: Klasse: Game, Methode: SpecialDefense, Zeilen: 88-94
    - Anonyme Klasse: Klasse: Game, Methode: specialAttack, Zeilen: 75-81
    - Elementklasse: Klasse: Monster, Zeilen: 1-41
 

@@ -9,12 +9,22 @@ public class SimpleMonster extends Monster {
 
     @Override
     public void paint() {
-        addRect(xPos, yPos + 60, 10, 40, red); // linkes Bein
-        addRect(xPos + 50, yPos + 60, 10, 40, red); // rechtes Bein
-        addRect(xPos, yPos, 60, 60, orange); // Körper
-        addRect(xPos - 10, yPos + 10, 10, 30, orange); // linker Arm
-        addRect(xPos + 60, yPos + 10, 10, 30, orange); // rechter Arm
-        addCircle(xPos + 25, yPos - 20, 20, orange); // Kopf
+        // Beine (zwei schmale blaue Rechtecke)
+        addRect(xPos , yPos +40, 20, 100, black);   // linkes Bein
+        addRect(xPos + 60, yPos +40, 20, 100, black);  // rechtes Bein
+
+        // Körper (breites blaues Rechteck)
+        addRect(xPos, yPos -20, 80, 96, yellow);
+
+        // Arme (schmale blaue Rechtecke)
+        addRect(xPos + 80, yPos + 20, 24, 80, red);  // linker Arm
+        addRect(xPos - 80, yPos + 20, 80, 24, red);  // rechter Arm
+
+        // Kopf (blauer Kreis)
+        addCircle(xPos + 13, yPos - 60, 40, red);
+
+        addRect(xPos -90, yPos -60, 10, 110, black);  // Schwertklinge
+        addRect(xPos -100, yPos +10, 30, 10, black);   // Schwertgriff
     }
 
     @Override

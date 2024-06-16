@@ -9,22 +9,32 @@ public class AdvancedMonster extends Monster {
 
     @Override
     public void paint() {
-        addRect(xPos, yPos + 60, 10, 40, green); // linkes Bein
-        addRect(xPos + 50, yPos + 60, 10, 40, green); // rechtes Bein
-        addRect(xPos + 25, yPos + 60, 10, 40, green); // mittleres Bein
-        addRect(xPos, yPos, 60, 60, yellow); // Körper
-        addRect(xPos - 10, yPos + 10, 10, 30, yellow); // linker Arm
-        addRect(xPos + 60, yPos + 10, 10, 30, yellow); // rechter Arm
-        addRect(xPos - 10, yPos + 30, 10, 30, yellow); // zweiter linker Arm
-        addRect(xPos + 60, yPos + 30, 10, 30, yellow); // zweiter rechter Arm
-        addCircle(xPos + 25, yPos - 20, 20, yellow); // Kopf
+        // Beine (zwei schmale blaue Rechtecke)
+        addRect(xPos , yPos +40, 20, 100, black);   // linkes Bein
+        addRect(xPos + 60, yPos +40, 20, 100, black);  // rechtes Bein
+
+        // Körper (breites blaues Rechteck)
+        addRect(xPos, yPos -20, 80, 96, yellow);
+
+        // Arme (schmale blaue Rechtecke)
+        addRect(xPos + 80, yPos + 20, 80, 24, red);  // linker Arm
+        addRect(xPos - 80, yPos + 20, 80, 24, red);  // rechter Arm
+
+        // Kopf (blauer Kreis)
+        addCircle(xPos + 13, yPos - 60, 40, red);
+
+        addRect(xPos -90, yPos -60, 10, 110, black);  // Schwertklinge
+        addRect(xPos -100, yPos +10, 30, 10, black);   // Schwertgriff
+
+        addRect(xPos +160, yPos -60, 10, 110, black);  // Schwertklinge rechts
+        addRect(xPos +150, yPos +10, 30, 10, black);   // Schwertgriff rechts
     }
 
     @Override
     public void attack(Fightable opponent) {
-        System.out.println(name + " führt einen Spezialangriff aus!");
+        System.out.println(name + " führt einen starken Angriff aus!");
         try {
-            ((Monster) opponent).reduceHealth(4);
+            ((Monster) opponent).reduceHealth(3); // Stärkerer Angriff
         } catch (HealthException e) {
             System.out.println(e.getMessage());
         }
