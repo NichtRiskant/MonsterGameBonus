@@ -21,6 +21,7 @@ public abstract class Monster implements Fightable {
         if (count > 0) {
             addRect(xPos + count * 10, yPos, 10, 10, red);
             paintRecursive(count - 1);
+
         }
     }
 
