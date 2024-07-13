@@ -1,38 +1,39 @@
-Monster-Kampfspiel: Anleitung
-
+Monsterspiel-Anleitung
 Sehr geehrter Professor Scholz,
-
-im Folgenden möchte ich Ihnen eine kurze Anleitung zu meinem Monster-Kampfspiel geben:
-
+im Folgenden möchte ich Ihnen eine kurze Anleitung zu meinem Monster-Kampfspiel geben.    Am Ende auch ein paar Spielausschnitte.
+Ich habe dieses Spiel entwickelt, weil dies mein dritter Versuch ist/war, die Prüfung zu bestehen. Programmieren ist nicht unbedingt etwas, was ich im Schlaf mache und meist viel Zeit investieren muss und sehr, sehr viel üben muss. Da es mir aber eigentlich sehr viel Spaß macht, habe ich sehr viel Zeit in das Spiel investiert, um gleichzeitig auch Ihre Vorlesungsinhalte zu lernen. Ich muss gestehen, zuhause ohne „Klausurenangst“ und mit Unterstützung Ihrer Videos und teilweise YouTube habe ich mir deutlich einfacher getan, Inhalte zu verstehen, Inhalte umzusetzen und sie in mein Spiel zu integrieren. Ich werde nicht aufgeben und weiter fleißig lernen und versuchen, die Prüfung zu bestehen, und auch in Zukunft weiter zu lernen, weil mir Programmieren eigentlich großen Spaß bereitet, trotz der Schwierigkeiten.
+Ich wünsche Ihnen viel Spaß beim Ausprobieren von meinem Spiel!
 Spielziel:
 Das Ziel des Spiels ist es, die Monster (Wiederholungsklausur und/oder Prüfungsmonster) zu besiegen, um die Prüfung zu bestehen.
-
 Spielstart:
 1. Starten Sie das Spiel, indem Sie die Anwendung ausführen.
 2. Wählen Sie den Schwierigkeitsgrad:
    - (1) Einfach: Kämpfen Sie gegen die Wiederholungsklausur.
    - (2) Schwer: Kämpfen Sie gegen das Prüfungsmonster.
    - (3) (Fast) Unmöglich: Kämpfen Sie nacheinander gegen beide Monster.
-
 Spielablauf:
 1. Sie spielen als Student mit einer Ausgangs-Lebenspunktzahl von 100.
 2. Die Monster haben je nach Schwierigkeitsgrad unterschiedliche Lebenspunkte.
-
+3. Die Spielfiguren werden erst gezeichnet, sobald ein Schwierigkeitsgrad ausgewählt wurde.
 Angriff:
 1. Um einen Angriff zu starten, geben Sie eine Zahl zwischen 1 und 3 ein.
-2. Wenn Ihre Zahl mit der zufällig generierten Zahl übereinstimmt, greifen Sie das Monster an und verursachen 5 Schadenspunkte.
+2. Wenn Ihre Zahl mit der zufällig generierten Zahl übereinstimmt, greifen Sie das Monster an und verursachen 2 Schadenspunkte.
 3. Treffen Sie zwei Mal hintereinander, führen Sie einen Spezialangriff aus und verursachen 7 Schadenspunkte.
 4. Wenn Ihre Zahl nicht übereinstimmt, wehrt das Monster Ihren Angriff ab und greift Sie an:
-   - Bei zwei aufeinanderfolgenden Fehlschlägen führt das Monster eine Spezialverteidigung aus und verursacht 3 Schadenspunkte.
+   - Bei zwei aufeinanderfolgenden Fehlschlägen führt das Monster eine Spezialverteidigung aus und verursacht 7 Schadenspunkte.
 
 Spielende:
 - Sie gewinnen das Spiel, wenn Sie alle Monster besiegen.
 - Sie verlieren das Spiel, wenn Ihre Lebenspunkte auf 0 sinken.
+- Bei Schwierigkeitsgrad 3 verschwindet das erste Monster im Fenster, wenn es besiegt wurde.
 
 Zusätzliche Informationen:
 - Der aktuelle Schwierigkeitsgrad wird am oberen Rand des Fensters angezeigt.
 - Ihre und die Lebenspunkte der Monster werden in der Konsole angezeigt.
+- Die Spielsteuerung erfolgt über die Kommandozeile.
+- Ich empfehle, das Spiel zeitgleich mit dem Programm nebeneinander offen zu haben, damit man die Aktionen im Fenster sehen kann.
+- Die jsTools müssen unbedingt eingefügt werden. Möglicherweise müssen Sie die jsTools.jar manuell hinzufügen, um Fehler zu vermeiden. Ich wusste leider nicht, wie ich bei der Abgabe das jsTools.jar bereits integrieren kann… ich bitte Sie daher dies ggf. manuell hinzufügen
 
-Ich hoffe, dass Ihnen mein Spiel gefällt und stehe für Rückfragen gerne zur Verfügung.
 
-
+Viele Grüße
+Eichner Dominic

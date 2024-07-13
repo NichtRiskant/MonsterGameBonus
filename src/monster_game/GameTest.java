@@ -10,7 +10,7 @@ public class GameTest {
         try {
             monster.reduceHealth(5);
         } catch (HealthException e) {
-            fail("HealthException sollte nicht ausgelöst werden. ");
+            fail("HealthException sollte nicht ausgelöst werden.");
         }
         assertEquals(10, monster.health);
     }
@@ -40,5 +40,20 @@ public class GameTest {
         Monster monster = new AdvancedMonster("TestMonster", 15, 0, 0);
         monster.attack(student);
         assertEquals(11, student.health);
+    }
+
+    @Test
+    public void testMonsterHealthBelowZero() {
+        Monster monster = new SimpleMonster("TestMonster", 2, 0, 0);
+        assertThrows(HealthException.class, () -> monster.reduceHealth(5));
+    }
+
+    @Test
+    public void testStudentDefeat() {
+        Student student = new Student("TestStudent", 2, 0, 0);
+        Monster monster = new SimpleMonster("TestMonster", 15, 0, 0);
+        monster.attack(student);
+        monster.attack(student);
+        assertTrue(student.isDefeated());
     }
 }

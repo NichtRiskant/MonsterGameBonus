@@ -4,7 +4,7 @@ import static jsTools.Graph.*;
 
 public class Drawing {
 
-    // Methode zur Anzeige des Levels
+    // Anzeige LevVel
     public static void drawLevel(int level) {
         String levelText = "Level " + level;
         int xStart = 10;
@@ -14,12 +14,12 @@ public class Drawing {
 
         for (char c : levelText.toCharArray()) {
             drawCharacter(c, xStart, yStart, rectSize, spacing);
-            xStart += (rectSize + spacing) * 6; // Anpassung der Startposition für das nächste Zeichen
+            xStart += (rectSize + spacing) * 6; // Startpos für nächste zeichnung
         }
     }
 
     public static void drawCharacter(char c, int xStart, int yStart, int rectSize, int spacing) {
-        // Muster für die Zeichen (einfaches Beispiel für L, e, v, l und Ziffern)
+        // Muster für L E V E L
         int[][] L = {
                 {1, 0, 0, 0, 0},
                 {1, 0, 0, 0, 0},
@@ -41,7 +41,7 @@ public class Drawing {
                 {0, 1, 0, 1, 0},
                 {0, 0, 1, 0, 0},
         };
-        int[][] L2 = L; // Wiederverwendung des L-Musters
+        int[][] L2 = L; // nochmal verwenden des Musters
 
         int[][] num1 = {
                 {0, 1, 0},

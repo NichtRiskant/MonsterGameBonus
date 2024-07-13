@@ -1,29 +1,29 @@
 package monster_game;
 
+import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
-
-import static jsTools.Graph.*;
+import static monster_game.GameDesign.clearAndRedrawWindow;
 import static monster_game.Drawing.*;
+import static jsTools.Graph.*;
 
 public class GamePlay {
-    public static void runGamePlay(Student student, Monster simpleMonster, Monster advancedMonster, int groundYPosition, int grassHeight, int windowWidth, int earthHeight, int choice) {
+    public static void runGamePlay(Student student, List<Monster> monsters, int groundYPosition, int grassHeight, int windowWidth, int earthHeight, int choice, InputHandler inputHandler) {
         Random random = new Random();
-        Scanner scanner = new Scanner(System.in);
 
-        int consecutiveHits = 0; // Zähler für aufeinanderfolgende Treffer
-        int consecutiveMisses = 0; // Zähler für aufeinanderfolgende Fehlschläge
+        int consecutiveHits = 0;
+        int consecutiveMisses = 0;
 
+        System.out.println("--------------------------------------------------");
         System.out.println("Willkommen zum Monster-Kampfspiel!");
         System.out.println("Du spielst als Student und kämpfst gegen die Monster.");
-        System.out.println("Um einen Angriff zu starten, gib eine Zahl zwischen 1 und 5 ein. Triffst du die richtige Zahl, greifst du das Monster an.");
+        System.out.println("Um einen Angriff zu starten, gib eine Zahl zwischen 1 und 3 ein. Triffst du die richtige Zahl, greifst du das Monster an.");
+        System.out.println("--------------------------------------------------");
 
-        while (!student.isDefeated() && ((simpleMonster != null && !simpleMonster.isDefeated()) || (advancedMonster != null && !advancedMonster.isDefeated()))) {
-            System.out.println("\nUm einen Angriff zu starten, gib deine Angriffszahl ein (1-3): ");
-            int input = scanner.nextInt();
+        while (!student.isDefeated() && monsters.stream().anyMatch(monster -> !monster.isDefeated())) {
+            int input = inputHandler.getAttackChoice();
             int randomNumber = random.nextInt(3) + 1;
 
-            Monster targetMonster = (simpleMonster != null && !simpleMonster.isDefeated()) ? simpleMonster : advancedMonster;
+            Monster targetMonster = monsters.stream().filter(monster -> !monster.isDefeated()).findFirst().orElse(null);
 
             if (input == randomNumber) {
                 System.out.println("Deine Angriffszahl war korrekt, du greifst das Monster an!");
@@ -31,22 +31,13 @@ public class GamePlay {
                 consecutiveMisses = 0;
 
                 if (consecutiveHits == 2) {
-                    // Anonyme Klasse für einen Spezialangriff nach zwei aufeinanderfolgenden Treffern
-                    Fightable specialAttack = new Fightable() {
-                        @Override
-                        public void attack(Fightable opponent) {
-                            System.out.println("Ein einmaliger Spezialangriff des Studenten nach zwei aufeinanderfolgenden Treffern!");
-                            try {
-                                ((Monster) opponent).reduceHealth(7);
-                                System.out.println(targetMonster.name + " erleidet 7 Trefferpunkte - Restliches Leben: " + ((Monster) opponent).health);
-                            } catch (HealthException e) {
-                                System.out.println(e.getMessage());
-                            }
-                        }
-                    };
-
-                    // Spezialangriff ausführen
-                    specialAttack.attack(targetMonster);
+                    System.out.println("Ein einmaliger Spezialangriff des Studenten nach zwei aufeinanderfolgenden Treffern!");
+                    try {
+                        targetMonster.reduceHealth(7);
+                        System.out.println(targetMonster.name + " erleidet 7 Trefferpunkte - Restliches Leben: " + targetMonster.health);
+                    } catch (HealthException e) {
+                        System.out.println(e.getMessage());
+                    }
                     consecutiveHits = 0; // Zähler zurücksetzen nach Spezialangriff
                 } else {
                     try {
@@ -62,25 +53,16 @@ public class GamePlay {
                 consecutiveMisses++;
 
                 if (consecutiveMisses == 2) {
-                    // Lokale Klasse für Spezialverteidigung
-                    class SpecialDefense {
-                        void defend() {
-                            System.out.println("Spezialverteidigung des Monsters!");
-                            try {
-                                student.reduceHealth(7);
-                            } catch (HealthException e) {
-                                System.out.println(e.getMessage());
-                            }
-                            System.out.println("Student erleidet 7 Trefferpunkte - Restliches Leben: " + student.health);
-                        }
+                    System.out.println("Spezialverteidigung des Monsters!");
+                    try {
+                        student.reduceHealth(7);
+                    } catch (HealthException e) {
+                        System.out.println(e.getMessage());
                     }
-
-                    // Benutzung der lokalen Klasse
-                    SpecialDefense defense = new SpecialDefense();
-                    defense.defend();
+                    System.out.println("Student erleidet 7 Trefferpunkte - Restliches Leben: " + student.health);
                     consecutiveMisses = 0; // Zähler zurücksetzen nach Spezialverteidigung
                 } else {
-                    targetMonster.attack(student); // Hier wird die attack Methode des Monsters aufgerufen
+                    targetMonster.attack(student);
                     System.out.println("Student erleidet " + targetMonster.getAttackDamage() + " Trefferpunkte - Restliches Leben: " + student.health);
                 }
                 System.out.println("Die richtige Zahl wäre gewesen: " + randomNumber);
@@ -88,47 +70,38 @@ public class GamePlay {
             }
 
             // Zeichnen der verbleibenden Monster und des Studenten
-            clearWindow();
-            addRect(0, groundYPosition, windowWidth, grassHeight, green); // Gras
-            addRect(0, groundYPosition + grassHeight, windowWidth, earthHeight, brown); // Erde
-            student.paint();
-            if (simpleMonster != null && !simpleMonster.isDefeated()) {
-                simpleMonster.paint();
-            }
-            if (advancedMonster != null && !advancedMonster.isDefeated()) {
-                advancedMonster.paint();
-            }
-            drawLevel(choice); // Zeichne das Level erneut
+            clearAndRedrawWindow(groundYPosition, grassHeight, windowWidth, earthHeight, student, monsters, choice);
 
             // Überprüfen, ob ein Monster besiegt wurde und übermalen
-            if (simpleMonster != null && simpleMonster.isDefeated()) {
-                System.out.println("Das erste Monster wurde besiegt! Kämpfe weiter gegen das nächste Monster!");
-                overpaintMonster(simpleMonster);
-                simpleMonster = null;
-            } else if (advancedMonster != null && advancedMonster.isDefeated()) {
-                System.out.println("Das erste Monster wurde besiegt! Kämpfe weiter gegen das nächste Monster!");
-                overpaintMonster(advancedMonster);
-                advancedMonster = null; // Entfernen Sie das besiegte Monster
+            if (targetMonster != null && targetMonster.isDefeated()) {
+                System.out.println("--------------------------------------------------");
+
+                System.out.println(targetMonster.name + " wurde besiegt!");
+                if (choice == 3 && monsters.stream().anyMatch(monster -> !monster.isDefeated())) {
+                    System.out.println("Kämpfe nun gegen das nächste Monster!");
+                    System.out.println("--------------------------------------------------");
+
+                }
+                overpaintMonster(targetMonster);
             }
+
+            // Berechnung der Gesamtschadenspunkte der verbleibenden Monster mit einer Lambda-Funktion
+            int totalRemainingHealth = monsters.stream()
+                    .filter(monster -> !monster.isDefeated())
+                    .mapToInt(monster -> monster.health)
+                    .sum();
+            System.out.println("Gesamte verbleibende Lebenspunkte der Monster: " + totalRemainingHealth);
         }
 
         if (student.isDefeated()) {
             System.out.println("--------------------------------------------------");
-            System.out.println("--------------------------------------------------");
-            System.out.println(" Das Monster war zu stark, du hast die Prüfung nicht bestanden!");
-            System.out.println("--------------------------------------------------");
+            System.out.println("Das Monster war zu stark, du hast die Prüfung nicht bestanden!");
             System.out.println("--------------------------------------------------");
             overpaintStudent(student);
         } else {
             System.out.println("--------------------------------------------------");
-            System.out.println("--------------------------------------------------");
             System.out.println("Du hast die Monster besiegt und deine Prüfung bestanden!");
             System.out.println("--------------------------------------------------");
-            System.out.println("--------------------------------------------------");
         }
-
-        scanner.close();
-
-
     }
 }

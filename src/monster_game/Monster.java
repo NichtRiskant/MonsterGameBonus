@@ -37,5 +37,5 @@ public abstract class Monster implements Fightable {
 
     public abstract void attack(Fightable opponent);
 
-    public abstract int getAttackDamage(); // Neue Methode hinzufügen
+    public abstract int getAttackDamage();
 }

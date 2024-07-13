@@ -1,58 +1,57 @@
 package monster_game;
 
-import static jsTools.Graph.*;
-import static monster_game.Drawing.drawLevel;
-import static monster_game.GamePlay.runGamePlay;
-import static monster_game.World.*;
-import static monster_game.Difficulty.selectDifficulty;
-import static monster_game.CharacterDrawing.drawCharacters;
-
+import java.util.ArrayList;
+import java.util.List;
+import static monster_game.GameDesign.*;
 
 public class Game {
     public static void main(String[] args) {
-        // Initialisierung des Fensters
         int windowWidth = 1600;
         int grassHeight = 20;
         int earthHeight = 500;
         int groundYPosition = 500;
         int skyYPosition = 100;
-        initializeWindow(windowWidth, groundYPosition, grassHeight, earthHeight, skyYPosition );
+
+        initializeWindow(windowWidth, groundYPosition, grassHeight, earthHeight, skyYPosition);
+
+        InputHandler inputHandler = new InputHandler();
 
         // Schwierigkeitsgrad auswählen
-        int choice = selectDifficulty();
+        int choice = inputHandler.getDifficultyChoice();
 
-        // Zeichne das Level am oberen Rand des Fensters
-        drawLevel(choice);
+        // Leven zeichnen am oberen Rand
+        Drawing.drawLevel(choice);
 
-        Monster simpleMonster = null;
-        Monster advancedMonster = null;
+        List<Monster> monsters = new ArrayList<>();
         Student student = new Student("Dominic", 15, 10, groundYPosition - 60 - grassHeight);
 
         if (choice == 1) {
-            simpleMonster = new SimpleMonster("Wiederholungsklausur", 15, 500, groundYPosition - 120 - grassHeight);
+            monsters.add(new SimpleMonster("Wiederholungsklausur", 15, 500, groundYPosition - 120 - grassHeight));
         } else if (choice == 2) {
-            advancedMonster = new AdvancedMonster("Prüfungsmonster", 15, 500, groundYPosition - 120 - grassHeight);
+            monsters.add(new AdvancedMonster("Prüfungsmonster", 15, 500, groundYPosition - 120 - grassHeight));
         } else if (choice == 3) {
-            simpleMonster = new SimpleMonster("Wiederholungsklausur", 15, 400, groundYPosition - 120 - grassHeight);
-            advancedMonster = new AdvancedMonster("Prüfungsmonster", 15, 700, groundYPosition - 120 - grassHeight);
-        } else {
-            System.out.println("Ungültige Wahl! Spiel wird beendet.");
-            System.exit(0);
+            monsters.add(new SimpleMonster("Wiederholungsklausur", 15, 400, groundYPosition - 120 - grassHeight));
+            monsters.add(new AdvancedMonster("Prüfungsmonster", 15, 700, groundYPosition - 120 - grassHeight));
         }
 
         // Zeichnen der Spielfiguren
-        drawCharacters(student, simpleMonster, advancedMonster);
+        drawCharacters(student, monsters);
 
         // Spielschleife ausführen
-        runGamePlay(student, simpleMonster, advancedMonster, groundYPosition, grassHeight, windowWidth, earthHeight, choice);
+        GamePlay.runGamePlay(student, monsters, groundYPosition, grassHeight, windowWidth, earthHeight, choice, inputHandler);
 
-        // Statische geschachtelte Klasse zur Anzeige des Punktestands
-        StaticNestedClass.displayScore(student, simpleMonster, advancedMonster);
+        // Stat. geschachteltee Klasse zur Anzeige des Punktestands
+        StaticNestedClass.displayScore(student, monsters);
+
+        System.out.println("\nAusrüstung des Studenten:");
+        System.out.println("Standard-Schwert");
+
+        inputHandler.close();
     }
 
-    // Statische geschachtelte Klasse für Hilfsfunktionen
     static class StaticNestedClass {
-        public static void displayScore(Student student, Monster... monsters) {
+        public static void displayScore(Student student, List<Monster> monsters) {
+            System.out.println("--------------------------------------------------");
             System.out.println("Aktuelle Lebenspunkte:");
             System.out.println("Student: " + student.health);
             for (Monster monster : monsters) {
@@ -60,6 +59,7 @@ public class Game {
                     System.out.println(monster.name + ": " + monster.health);
                 }
             }
+            System.out.println("--------------------------------------------------");
         }
     }
 }
